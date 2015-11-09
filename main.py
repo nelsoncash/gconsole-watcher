@@ -2,23 +2,35 @@ import sys
 import os
 import git
 import time
+import argparse
 from git import Repo
 
-def watch_git(git, repo_path, to_call):
+def watch_git(git, repo_path, run_path, interval):
 	result = git.checkout("master")
-	if result == "Your branch is up-to-date with 'origin/master'.":
-		time.sleep(60)
-		watch_git(git, repo_path, to_call)
-	else:
+	result = git.pull()
+	print "Checking master branch for changes..."
+	# If git returns one of these, then we do not need to do a pull at this time
+	if result != "Your branch is up-to-date with 'origin/master'." and result != "Already up-to-date.":
+		print "Updating local master repo"
 		git.pull()
-		time.sleep(60)
-		os.system("{} {}".format(os.path.abspath(to_call), os.path.abspath(repo_path)))
-		watch_git(git, repo_path, to_call)
+		os.system("{} {}".format(os.path.abspath(run_path), os.path.abspath(repo_path)))
+	# Wait before checking the repo so that we aren't spamming the server
+	time.sleep(interval)
+	watch_git(git, repo_path, run_path, interval)
 
 if __name__ == '__main__':
-	repo_path = str(sys.argv[1])
-	to_call = str(sys.argv[2])
+	parser = argparse.ArgumentParser(description="Watch a git repo for changes and pulls the changes")
+	# The path to the repo tha we want to watch
+	parser.add_argument('--repo_path', metavar='repo_path', type=str)
+	# The path to the script or file to run after a git pull
+	parser.add_argument('--run_path', metavar='run_path', type=str)
+	# The interval time (in seconds) in between status checks on the repo
+	parser.add_argument('--interval', metavar='interval', type=int)
+	args = parser.parse_args()
+	repo_path = args.repo_path
+	run_path = args.run_path
+	interval = args.interval
 	repo = Repo(os.path.abspath(repo_path))
 	git = repo.git
 
-	watch_git(git, repo_path, to_call)
+	watch_git(git, repo_path, run_path, interval)
