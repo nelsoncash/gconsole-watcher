@@ -4,13 +4,14 @@ import git
 import time
 from git import Repo
 
-def check_git_status(git, branch):
+def check_git_status(git, branch, starting_branch):
 	result = git.checkout(branch)
 	if result == "Your branch is up-to-date with 'origin/master'.":
 		time.sleep(60)
-		check_git_status(git, branch)
+		check_git_status(git, branch, starting_branch)
 	else:
 		git.pull()
+		revert_git_state(git, starting_branch)
 
 def revert_git_state(git, branch):
 	git.checkout(branch)
@@ -27,5 +28,5 @@ if __name__ == '__main__':
 	import atexit
 	atexit.register(revert_git_state, git, starting_branch.name)
 
-	check_git_status(git, repo_branch)
+	check_git_status(git, repo_branch, starting_branch.name)
 	
