@@ -12,7 +12,7 @@ def watch_git(git, repo_path, to_call):
 	else:
 		git.pull()
 		time.sleep(60)
-		os.system("python {} {}".format(os.path.abspath(to_call), os.path.abspath(repo_path)))
+		os.system("{} {}".format(os.path.abspath(to_call), os.path.abspath(repo_path)))
 		watch_git(git, repo_path, to_call)
 
 if __name__ == '__main__':
