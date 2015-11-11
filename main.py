@@ -6,6 +6,7 @@ import argparse
 from git import Repo
 
 def watch_git(git, repo_path, branch, run_path, interval):
+	git.pull()
 	result = git.checkout("{}".format(branch))
 	print git.branch()
 	pull = "git pull origin {}".format(branch)
