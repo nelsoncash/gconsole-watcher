@@ -10,7 +10,7 @@ def watch_git(git, repo_path, branch, run_path, interval):
 	result = git.pull()
 	print "Checking master branch for changes..."
 	# If git returns one of these, then we do not need to do a pull at this time
-	if result != "Your branch is up-to-date with 'origin/master'." and result != "Already up-to-date.":
+	if result != "Your branch is up-to-date with 'origin/{}'.".format(branch) and result != "Already up-to-date.":
 		print "Updating local '{}' repo".format(branch)
 		git.pull()
 		os.system("{} {}".format(os.path.abspath(run_path), os.path.abspath(repo_path)))
