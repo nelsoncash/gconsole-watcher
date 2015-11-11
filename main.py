@@ -6,7 +6,7 @@ import argparse
 from git import Repo
 
 def watch_git(git, repo_path, branch, run_path, interval):
-	result = git.checkout(branch)
+	result = git.checkout('HEAD', b=branch)
 	result = git.pull()
 	print "Checking master branch for changes..."
 	# If git returns one of these, then we do not need to do a pull at this time
