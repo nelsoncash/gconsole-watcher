@@ -8,6 +8,9 @@ from git import Repo
 def watch_git(git, repo_path, branch, run_path, interval):
 	#git.pull()
 	#result = git.checkout("{}".format(branch))
+	cd = "cd {}".format(os.path.abspath(repo_path))
+	print cd
+	os.system(cd)
 	checkout = "git checkout {}".format(branch)
 	print checkout
 	os.system(checkout)
@@ -15,6 +18,7 @@ def watch_git(git, repo_path, branch, run_path, interval):
 	pull = "git pull origin {}".format(branch)
 	print pull
 	result = os.system(pull)
+	print result
 	print "Checking {} branch for changes...".format(branch)
 	# If git returns one of these, then we do not need to do a pull at this time
 	if result != "Your branch is up-to-date with 'origin/{}'.".format(branch) and result != "Already up-to-date.":
