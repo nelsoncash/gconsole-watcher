@@ -11,7 +11,7 @@ def watch_git(git, repo_path, branch, run_path, interval):
 	# cd = "cd {}".format(os.path.abspath(repo_path))
 	# print cd
 	# os.system(cd)
-	checkout = "git checkout {}".format(branch)
+	checkout = "git -C checkout {} {}".format(repo_path, branch)
 	print checkout
 	os.system(checkout)
 	#print git.branch()
