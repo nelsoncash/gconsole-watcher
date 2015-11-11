@@ -3,6 +3,7 @@ import os
 import git
 import time
 import argparse
+import subprocess
 from git import Repo
 
 def watch_git(git, repo_path, branch, run_path, interval):
@@ -18,7 +19,8 @@ def watch_git(git, repo_path, branch, run_path, interval):
 	#pull = "git pull origin {}".format(branch)
 	pull = "git -C {} pull origin {}".format(repo_path, branch)
 	print pull
-	result = os.system(pull)
+	# result = os.system(pull)
+	result = subprocess.check_output(pull, shell=True)
 	print result
 	print "Checking {} branch for changes...".format(branch)
 	# If git returns one of these, then we do not need to do a pull at this time
