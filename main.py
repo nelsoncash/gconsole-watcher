@@ -14,7 +14,7 @@ def watch_git(git, repo_path, branch, run_path, interval):
 	#print git.branch()
 	pull = "git pull origin {}".format(branch)
 	print pull
-	os.system(pull)
+	result = os.system(pull)
 	print "Checking {} branch for changes...".format(branch)
 	# If git returns one of these, then we do not need to do a pull at this time
 	if result != "Your branch is up-to-date with 'origin/{}'.".format(branch) and result != "Already up-to-date.":
