@@ -8,14 +8,15 @@ from git import Repo
 def watch_git(git, repo_path, branch, run_path, interval):
 	#git.pull()
 	#result = git.checkout("{}".format(branch))
-	cd = "cd {}".format(os.path.abspath(repo_path))
-	print cd
-	os.system(cd)
+	# cd = "cd {}".format(os.path.abspath(repo_path))
+	# print cd
+	# os.system(cd)
 	checkout = "git checkout {}".format(branch)
 	print checkout
 	os.system(checkout)
 	#print git.branch()
-	pull = "git pull origin {}".format(branch)
+	#pull = "git pull origin {}".format(branch)
+	pull = "git -C {} pull origin {}".format(repo_path, branch)
 	print pull
 	result = os.system(pull)
 	print result
